@@ -1,0 +1,119 @@
+{
+    "type": "object",
+    "properties": {
+        "authJwksUrl": {
+            "type": "string",
+            "description": "URL that responds with a JWKS to be use in validating tokens"
+        },
+        "checkIpAddress": {"type": "boolean"},
+        "cors": {
+            "type": "object",
+            "properties": {
+                "allowedCredentials": {"type": "boolean"},
+                "allowedHeaders": {"type": "string"},
+                "allowedMethods": {"type": "object"},
+                "allowedOrigins": {"type": "string"}
+            }
+        },
+        "dataMeasureReportId": {"type": "string"},
+        "dataProcessor": {
+            "type": "object",
+            "properties": {
+                "get": {"type": "string"},
+                "orDefault": {"type": "string"},
+                "isEmpty": {"type": "boolean"}
+            }
+        },
+        "dataStore": {
+            "type": "object",
+            "properties": {
+                "baseUrl": {"type": "string"},
+                "password": {"type": "string"},
+                "username": {"type": "string"}
+            }
+        },
+        "documentReferenceSystem": {"type": "string"},
+        "downloader": {"type": "string"},
+        "evaluationService": {"type": "string"},
+        "issuer": {"type": "string"},
+        "measureEvaluationThreads": {"type": "integer"},
+        "measureLocation": {
+            "type": "object",
+            "properties": {
+                "latitude": {"type": "number"},
+                "longitude": {"type": "number"},
+                "system": {"type": "string"},
+                "value": {"type": "string"}
+            }
+        },
+        "measurePackages": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "bundleIds": {"type": "object"},
+                    "id": {"type": "string"}
+                }
+            }
+        },
+        "patientIdResolver": {"type": "string"},
+        "publicAddress": {"type": "string"},
+        "reportAggregator": {"type": "string"},
+        "reportDefs": {
+            "type": "object",
+            "properties": {
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "clientId": {"type": "string"},
+                        "credentialMode": {
+                            "enum": [
+                                "Client",
+                                "Password"
+                            ],
+                            "type": "string"
+                        },
+                        "password": {"type": "string"},
+                        "scope": {"type": "string"},
+                        "tokenUrl": {"type": "string"},
+                        "username": {"type": "string"}
+                    }
+                },
+                "maxRetry": {"type": "integer"},
+                "retryWait": {"type": "integer"},
+                "urlByBundleId": {
+                    "type": "object",
+                    "properties": {
+                        "bundleId": {"type": "string"},
+                        "reportAggregator": {"type": "string"},
+                        "url": {"type": "string"}
+                    }
+                },
+                "urls": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "bundleId": {"type": "string"},
+                            "reportAggregator": {"type": "string"},
+                            "url": {"type": "string"}
+                        }
+                    }
+                }
+            }
+        },
+        "sender": {"type": "string"},
+        "skipInit": {"type": "boolean"},
+        "socketTimeout": {"type": "string"},
+        "terminologyService": {"type": "string"},
+        "user": {
+            "type": "object",
+            "properties": {
+                "timezone": {"type": "string"}
+            }
+        },
+        "validateFhirServer": {"type": "boolean"},
+        "requireHttps": {"type": "boolean"}
+    },
+    "$schema": "http://json-schema.org/draft-04/schema#"
+}

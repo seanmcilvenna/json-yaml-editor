@@ -1,0 +1,45 @@
+<div *ngIf="parentObj" [ngSwitch]="property.type">
+  <div *ngSwitchCase="'boolean'">
+    <div class="form-group">
+      <label>{{propertyNameDisplay}}</label>
+      <span class="description" *ngIf="property.description">{{property.description}}</span>
+      <select class="form-control boolean" [(ngModel)]="booleanValue">
+        <option [value]="true">true</option>
+        <option [value]="false">false</option>
+      </select>
+    </div>
+  </div>
+  <div *ngSwitchCase="'string'">
+    <div class="form-group">
+      <label>{{propertyNameDisplay}}</label>
+      <span class="description" *ngIf="property.description">{{property.description}}</span>
+      <input type="text" class="form-control string" [(ngModel)]="parentObj[propertyName]" />
+    </div>
+  </div>
+  <div *ngSwitchCase="'integer'">
+    <div class="form-group">
+      <label>{{propertyNameDisplay}}</label>
+      <span class="description" *ngIf="property.description">{{property.description}}</span>
+      <input type="number" class="form-control number" [(ngModel)]="parentObj[propertyName]" />
+    </div>
+  </div>
+  <div *ngSwitchCase="'number'">
+    <div class="form-group">
+      <label>{{propertyNameDisplay}}</label>
+      <span class="description" *ngIf="property.description">{{property.description}}</span>
+      <input type="number" class="form-control number" [(ngModel)]="parentObj[propertyName]" />
+    </div>
+  </div>
+</div>
+
+<div class="card" *ngIf="property.properties">
+  <div class="card-header">
+    {{propertyNameDisplay}}
+    <span class="description" *ngIf="property.description">{{property.description}}</span>
+  </div>
+  <div class="card-body">
+    <app-property-wrapper *ngFor="let childProperty of property.properties | keyvalue" [property]="childProperty.value" [propertyName]="childProperty.key" [schema]="schema" [parentObj]="parentObj[propertyName]"></app-property-wrapper>
+  </div>
+</div>
+
+<!-- TODO: arrays -->

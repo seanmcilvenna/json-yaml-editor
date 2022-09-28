@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'json-yaml-editor';
+  public schema: any;
+  public instance: any;
+
+  public selectSchema(files: FileList) {
+    if (files.length != 1) return;
+
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      const content = fileReader.result as string;
+      this.schema = JSON.parse(content);
+      this.instance = {};
+    }
+    fileReader.readAsText(files[0]);
+  }
 }

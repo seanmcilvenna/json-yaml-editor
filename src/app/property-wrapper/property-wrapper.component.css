@@ -1,0 +1,17 @@
+.card {
+  margin-top: 10px;
+}
+
+.form-control {
+  margin-top: 10px;
+}
+
+span.description {
+  font-weight: normal;
+  color: gray;
+}
+
+span.description::before {
+  content: '\A';
+  white-space: pre;
+}
