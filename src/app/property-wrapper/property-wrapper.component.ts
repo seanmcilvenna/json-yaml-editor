@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {ConfigService} from "../config.service";
 
 @Component({
   selector: 'app-property-wrapper',
@@ -11,7 +12,8 @@ export class PropertyWrapperComponent implements OnInit {
   @Input() schema: any;
   @Input() parentObj: any;
 
-  constructor() { }
+  constructor(public configService: ConfigService) {
+  }
 
   get booleanValue() {
     return this.parentObj[this.propertyName];
@@ -33,8 +35,23 @@ export class PropertyWrapperComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.property && this.property.type === 'object' && this.propertyName && this.parentObj && !this.parentObj[this.propertyName]) {
-      this.parentObj[this.propertyName] = {};
+    if (this.property && this.propertyName) {
+      if (this.property.type === 'object' && this.parentObj && !this.parentObj[this.propertyName]) {
+        this.parentObj[this.propertyName] = {};
+      } else if (this.parentObj && !this.parentObj[this.propertyName] && this.property.default) {
+        switch (this.property.type) {
+          case 'boolean':
+            this.parentObj[this.propertyName] = this.property.default.toLowerCase() === 'true';
+            break;
+          case 'integer':
+          case 'number':
+            this.parentObj[this.propertyName] = parseInt(this.propertyName.default);
+            break;
+          default:
+            this.parentObj[this.propertyName] = this.property.default;
+            break;
+        }
+      }
     }
   }
 }

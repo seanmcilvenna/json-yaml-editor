@@ -1,119 +1,226 @@
 {
-    "type": "object",
-    "properties": {
-        "authJwksUrl": {
-            "type": "string",
-            "description": "URL that responds with a JWKS to be use in validating tokens"
-        },
-        "checkIpAddress": {"type": "boolean"},
-        "cors": {
-            "type": "object",
-            "properties": {
-                "allowedCredentials": {"type": "boolean"},
-                "allowedHeaders": {"type": "string"},
-                "allowedMethods": {"type": "object"},
-                "allowedOrigins": {"type": "string"}
-            }
-        },
-        "dataMeasureReportId": {"type": "string"},
-        "dataProcessor": {
-            "type": "object",
-            "properties": {
-                "get": {"type": "string"},
-                "orDefault": {"type": "string"},
-                "isEmpty": {"type": "boolean"}
-            }
-        },
-        "dataStore": {
-            "type": "object",
-            "properties": {
-                "baseUrl": {"type": "string"},
-                "password": {"type": "string"},
-                "username": {"type": "string"}
-            }
-        },
-        "documentReferenceSystem": {"type": "string"},
-        "downloader": {"type": "string"},
-        "evaluationService": {"type": "string"},
-        "issuer": {"type": "string"},
-        "measureEvaluationThreads": {"type": "integer"},
-        "measureLocation": {
-            "type": "object",
-            "properties": {
-                "latitude": {"type": "number"},
-                "longitude": {"type": "number"},
-                "system": {"type": "string"},
-                "value": {"type": "string"}
-            }
-        },
-        "measurePackages": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "bundleIds": {"type": "object"},
-                    "id": {"type": "string"}
-                }
-            }
-        },
-        "patientIdResolver": {"type": "string"},
-        "publicAddress": {"type": "string"},
-        "reportAggregator": {"type": "string"},
-        "reportDefs": {
-            "type": "object",
-            "properties": {
-                "auth": {
-                    "type": "object",
-                    "properties": {
-                        "clientId": {"type": "string"},
-                        "credentialMode": {
-                            "enum": [
-                                "Client",
-                                "Password"
-                            ],
-                            "type": "string"
-                        },
-                        "password": {"type": "string"},
-                        "scope": {"type": "string"},
-                        "tokenUrl": {"type": "string"},
-                        "username": {"type": "string"}
-                    }
-                },
-                "maxRetry": {"type": "integer"},
-                "retryWait": {"type": "integer"},
-                "urlByBundleId": {
-                    "type": "object",
-                    "properties": {
-                        "bundleId": {"type": "string"},
-                        "reportAggregator": {"type": "string"},
-                        "url": {"type": "string"}
-                    }
-                },
-                "urls": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "bundleId": {"type": "string"},
-                            "reportAggregator": {"type": "string"},
-                            "url": {"type": "string"}
-                        }
-                    }
-                }
-            }
-        },
-        "sender": {"type": "string"},
-        "skipInit": {"type": "boolean"},
-        "socketTimeout": {"type": "string"},
-        "terminologyService": {"type": "string"},
-        "user": {
-            "type": "object",
-            "properties": {
-                "timezone": {"type": "string"}
-            }
-        },
-        "validateFhirServer": {"type": "boolean"},
-        "requireHttps": {"type": "boolean"}
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "authJwksUrl" : {
+      "type" : "string",
+      "description" : "The url endpoint for certs from the identity provider, which is used to verify any JSON Web Token (JWT)"
     },
-    "$schema": "http://json-schema.org/draft-04/schema#"
+    "checkIpAddress" : {
+      "type" : "boolean",
+      "description" : "Check if the IP address in the jwt token matches the ip address of the request"
+    },
+    "cors" : {
+      "type" : "object",
+      "properties" : {
+        "allowedCredentials" : {
+          "type" : "boolean"
+        },
+        "allowedHeaders" : {
+          "type" : "string"
+        },
+        "allowedMethods" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "allowedOrigins" : {
+          "type" : "string"
+        }
+      },
+      "description" : "CORS configuration used for browser interaction with the API"
+    },
+    "dataMeasureReportId" : {
+      "type" : "string",
+      "description" : "The string represents the data measure report id that gets continuously updated."
+    },
+    "dataProcessor" : {
+      "type" : "object",
+      "properties" : {
+        "loadFactor" : {
+          "type" : "number"
+        },
+        "threshold" : {
+          "type" : "integer"
+        }
+      },
+      "description" : "The key represents the “type” of data source (csv, excel, etc.) and the value represents the class to use to process the data."
+    },
+    "dataStore" : {
+      "type" : "object",
+      "properties" : {
+        "baseUrl" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "username" : {
+          "type" : "string"
+        }
+      },
+      "description" : "Defines the location and authentication for the data storage service."
+    },
+    "documentReferenceSystem" : {
+      "type" : "string",
+      "description" : "The \"system\" value of identifiers for DocumentReference resources created to index reports generated"
+    },
+    "downloader" : {
+      "type" : "string",
+      "description" : "The class used to download reports",
+      "default" : "com.lantanagroup.link.nhsn.MeasureReportDownloader"
+    },
+    "evaluationService" : {
+      "type" : "string",
+      "description" : "The measure evaluation service (CQF-Ruler) installation that is to be used to evaluate patient data against measure logic."
+    },
+    "issuer" : {
+      "type" : "string",
+      "description" : "This issuer is used during token validation to ensure that the JWT has been issued by a trusted system"
+    },
+    "measureEvaluationThreads" : {
+      "type" : "integer",
+      "description" : "TODO"
+    },
+    "measureLocation" : {
+      "type" : "object",
+      "properties" : {
+        "latitude" : {
+          "type" : "number"
+        },
+        "longitude" : {
+          "type" : "number"
+        },
+        "system" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "description" : "Location information to be included in all MeasureReport resources exported/sent from the system"
+    },
+    "measurePackages" : {
+      "description" : "Configuration for multi measures supported by the system",
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "bundleIds" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "id" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "bundleIds" ],
+        "description" : "Configuration for multi measures supported by the system"
+      }
+    },
+    "patientIdResolver" : {
+      "type" : "string",
+      "description" : "The class used to determine the list of patient ids that should be queried for"
+    },
+    "publicAddress" : {
+      "type" : "string",
+      "description" : "The public endpoint address for the API (i.e. https://dev.nhsnlink.org/api)"
+    },
+    "reportAggregator" : {
+      "type" : "string",
+      "description" : "TODO"
+    },
+    "reportDefs" : {
+      "type" : "object",
+      "properties" : {
+        "auth" : {
+          "type" : "object",
+          "properties" : {
+            "clientId" : {
+              "type" : "string"
+            },
+            "credentialMode" : {
+              "type" : "string",
+              "enum" : [ "Client", "Password" ]
+            },
+            "password" : {
+              "type" : "string"
+            },
+            "scope" : {
+              "type" : "string"
+            },
+            "tokenUrl" : {
+              "type" : "string"
+            },
+            "username" : {
+              "type" : "string"
+            }
+          }
+        },
+        "maxRetry" : {
+          "type" : "integer"
+        },
+        "retryWait" : {
+          "type" : "integer"
+        },
+        "urls" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "bundleId" : {
+                "type" : "string"
+              },
+              "reportAggregator" : {
+                "type" : "string"
+              },
+              "url" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      },
+      "description" : "Configuration for measures supported by the system"
+    },
+    "requireHttps" : {
+      "type" : "boolean",
+      "description" : "Indicates if HTTPS is required for submission urls."
+    },
+    "sender" : {
+      "type" : "string",
+      "description" : "The class used to send reports",
+      "default" : "com.lantanagroup.link.nhsn.FHIRSender"
+    },
+    "skipInit" : {
+      "type" : "boolean",
+      "description" : "If true, init processes (loading measure bundles and resources into the internal FHIR server) should be skipped"
+    },
+    "socketTimeout" : {
+      "type" : "string",
+      "description" : "TODO",
+      "default" : "5000"
+    },
+    "terminologyService" : {
+      "type" : "string",
+      "description" : "The FHIR terminology service to use for storing ValueSet and CodeSystem resources, passed to the evaluation-service for use during measure evaluation."
+    },
+    "user" : {
+      "type" : "object",
+      "properties" : {
+        "timezone" : {
+          "type" : "string"
+        }
+      },
+      "description" : "Configuration related to the user that is responsible for running the installation of Link, such as timezone settings."
+    },
+    "validateFhirServer" : {
+      "type" : "boolean",
+      "description" : "Boolean for whether to check for metadata before request or not"
+    }
+  },
+  "required" : [ "dataStore", "downloader", "evaluationService", "sender", "terminologyService" ]
 }

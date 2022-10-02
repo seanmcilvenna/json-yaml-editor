@@ -1,0 +1,8 @@
+{
+  "fieldOptions": {
+    "reportAggregator": [
+      "com.lantanagroup.link.nhsn.ReportAggregator",
+      "com.lantanagroup.link.thsa.THSAAggregator"
+    ]
+  }
+}

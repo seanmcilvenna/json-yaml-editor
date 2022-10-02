@@ -9,18 +9,15 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
-        <!--
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="javascript:void(0)" (click)="openSchema(openSchemaModal)">Open Schema</a>
         </li>
+        <!--
         <li class="nav-item">
           <a class="nav-link disabled">Disabled</a>
         </li>
         -->
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="file" placeholder="JSON/YAML Schema" (change)="selectSchema(schemaFileInput.files)" #schemaFileInput>
-      </form>
     </div>
   </div>
 </nav>
@@ -49,3 +46,17 @@
     <div [ngbNavOutlet]="nav" class="mt-2"></div>
   </div>
 </main>
+
+<ng-template #openSchemaModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Open Schema</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <input class="form-control me-2" type="file" placeholder="JSON/YAML Schema" (change)="schemaUrl = null" #schemaFileInput />
+    <input class="form-control me-2" type="string" placeholder="HTTP/S URL" [(ngModel)]="schemaUrl" (change)="schemaFileInput.value = null" />
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="ok(schemaFileInput.files, schemaUrl)">OK</button>
+  </div>
+</ng-template>
