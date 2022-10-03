@@ -8,6 +8,10 @@ import {FormsModule} from "@angular/forms";
 import { YamlPipe } from './yaml.pipe';
 import {ConfigService} from "./config.service";
 import {HttpClientModule} from "@angular/common/http";
+import {DeploymentService} from "./deployment.service";
+import { OpenDeploymentComponent } from './open-deployment/open-deployment.component';
+import { AddComponentComponent } from './add-component/add-component.component';
+import { AddDeploymentComponent } from './add-deployment/add-deployment.component';
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -17,7 +21,10 @@ export const configFactory = (configService: ConfigService) => {
   declarations: [
     AppComponent,
     PropertyWrapperComponent,
-    YamlPipe
+    YamlPipe,
+    OpenDeploymentComponent,
+    AddComponentComponent,
+    AddDeploymentComponent
   ],
   imports: [
     FormsModule,
@@ -31,7 +38,8 @@ export const configFactory = (configService: ConfigService) => {
       useFactory: configFactory,
       deps: [ConfigService],
       multi: true
-    }
+    },
+    DeploymentService
   ],
   bootstrap: [AppComponent]
 })

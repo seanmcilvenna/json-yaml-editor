@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ConfigService} from "../config.service";
+import {debounceTime, Subject} from "rxjs";
+import {DeploymentService} from "../deployment.service";
 
 @Component({
   selector: 'app-property-wrapper',
@@ -11,8 +13,12 @@ export class PropertyWrapperComponent implements OnInit {
   @Input() propertyName: any;
   @Input() schema: any;
   @Input() parentObj: any;
+  public changed = new Subject<void>();
 
-  constructor(public configService: ConfigService) {
+  constructor(public configService: ConfigService, private deploymentService: DeploymentService) {
+    this.changed.pipe(debounceTime(1000)).subscribe(async () => {
+      await this.deploymentService.update();
+    });
   }
 
   get booleanValue() {

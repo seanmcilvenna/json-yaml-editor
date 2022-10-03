@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Open Deployment</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close()"></button>
+</div>
+<div class="modal-body">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>
+        <div class="float-end">
+          <button type="button" class="btn btn-primary" (click)="add()">Add</button>
+        </div>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let dep of deployments">
+      <td>{{dep.name}}</td>
+      <td>
+        <div class="float-end btn-group">
+          <button type="button" class="btn btn-primary" (click)="select(dep)">Select</button>
+          <button type="button" class="btn btn-secondary" (click)="delete(dep)">Delete</button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

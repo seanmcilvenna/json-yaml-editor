@@ -10,8 +10,19 @@
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0)" (click)="openSchema(openSchemaModal)">Open Schema</a>
+          <a class="nav-link" href="javascript:void(0)" (click)="openDeployment()">Open Deployment</a>
         </li>
+        <li class="nav-item dropdown" *ngIf="deploymentService.current">
+          <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{deploymentService.current.name}}
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="javascript:void(0)" *ngFor="let component of deploymentService.current.components" (click)="deploymentService.currentComponent = component">{{component.name}}</a></li>
+            <li *ngIf="deploymentService.current.components?.length"><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="javascript:void(0)" (click)="addComponent()">Add Component</a></li>
+          </ul>
+        </li>
+
         <!--
         <li class="nav-item">
           <a class="nav-link disabled">Disabled</a>
@@ -23,13 +34,14 @@
 </nav>
 
 <main class="container">
-  <div class="bg-light p-5 rounded" *ngIf="schema">
+  <div class="bg-light p-5 rounded" *ngIf="deploymentService?.currentComponent?.schema">
+    <h2>{{deploymentService.currentComponent.name}}</h2>
     <ul ngbNav #nav="ngbNav" class="nav-tabs">
       <li [ngbNavItem]="1">
         <a ngbNavLink>Fields</a>
         <ng-template ngbNavContent>
-          <div *ngFor="let property of schema.properties | keyvalue">
-            <app-property-wrapper [property]="property.value" [propertyName]="property.key" [schema]="schema" [parentObj]="instance"></app-property-wrapper>
+          <div *ngFor="let property of deploymentService.currentComponent.schema.properties | keyvalue">
+            <app-property-wrapper [property]="property.value" [propertyName]="property.key" [schema]="deploymentService.currentComponent.schema" [parentObj]="deploymentService.currentComponent.instance"></app-property-wrapper>
           </div>
         </ng-template>
       </li>
@@ -37,7 +49,7 @@
         <a ngbNavLink>YAML</a>
         <ng-template ngbNavContent>
           <code>
-            <pre>{{instance | yaml}}</pre>
+            <pre>{{deploymentService.currentComponent.instance | yaml}}</pre>
           </code>
         </ng-template>
       </li>
@@ -46,17 +58,3 @@
     <div [ngbNavOutlet]="nav" class="mt-2"></div>
   </div>
 </main>
-
-<ng-template #openSchemaModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Open Schema</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <input class="form-control me-2" type="file" placeholder="JSON/YAML Schema" (change)="schemaUrl = null" #schemaFileInput />
-    <input class="form-control me-2" type="string" placeholder="HTTP/S URL" [(ngModel)]="schemaUrl" (change)="schemaFileInput.value = null" />
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="ok(schemaFileInput.files, schemaUrl)">OK</button>
-  </div>
-</ng-template>

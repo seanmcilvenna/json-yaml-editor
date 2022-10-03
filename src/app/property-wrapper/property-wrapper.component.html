@@ -3,7 +3,7 @@
     <div class="form-group">
       <label title="{{propertyName}}">{{propertyNameDisplay}}</label>
       <span class="description" *ngIf="property.description">{{property.description}}</span>
-      <select class="form-control boolean" [(ngModel)]="booleanValue">
+      <select class="form-control boolean" [(ngModel)]="booleanValue" (change)="changed.next(null)">
         <option [value]="true">true</option>
         <option [value]="false">false</option>
       </select>
@@ -13,8 +13,8 @@
     <div class="form-group">
       <label title="{{propertyName}}">{{propertyNameDisplay}}</label>
       <span class="description" *ngIf="property.description">{{property.description}}</span>
-      <input *ngIf="!configService.config?.fieldOptions[propertyName]" type="text" class="form-control string" [(ngModel)]="parentObj[propertyName]" />
-      <select *ngIf="configService.config?.fieldOptions[propertyName]" [(ngModel)]="parentObj[propertyName]" class="form-control">
+      <input *ngIf="!configService.config?.fieldOptions[propertyName]" type="text" class="form-control string" [(ngModel)]="parentObj[propertyName]" (change)="changed.next(null)" />
+      <select *ngIf="configService.config?.fieldOptions[propertyName]" [(ngModel)]="parentObj[propertyName]" class="form-control" (change)="changed.next(null)">
         <option *ngFor="let optionValue of configService.config?.fieldOptions[propertyName]">{{optionValue}}</option>
       </select>
     </div>
@@ -23,14 +23,14 @@
     <div class="form-group">
       <label title="{{propertyName}}">{{propertyNameDisplay}}</label>
       <span class="description" *ngIf="property.description">{{property.description}}</span>
-      <input type="number" class="form-control number" [(ngModel)]="parentObj[propertyName]" />
+      <input type="number" class="form-control number" [(ngModel)]="parentObj[propertyName]" (change)="changed.next(null)" />
     </div>
   </div>
   <div *ngSwitchCase="'number'">
     <div class="form-group">
       <label title="{{propertyName}}">{{propertyNameDisplay}}</label>
       <span class="description" *ngIf="property.description">{{property.description}}</span>
-      <input type="number" class="form-control number" [(ngModel)]="parentObj[propertyName]" />
+      <input type="number" class="form-control number" [(ngModel)]="parentObj[propertyName]" (change)="changed.next(null)" />
     </div>
   </div>
 </div>
